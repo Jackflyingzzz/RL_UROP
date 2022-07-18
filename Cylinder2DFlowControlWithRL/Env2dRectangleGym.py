@@ -32,10 +32,10 @@ class RingBuffer():
 
 class Env2dRec(gym.Env):
   
-  def __init__(self, arg1, arg2, ...):
+  def __init__(self, output_params):
         super().__init__()
         
-        
+        self.output_params = output_params
         self.ann_probes = PressureProbeANN(self.flow, self.output_params['locations'])
         state_shape = self.ann_probes.nprobes
         
