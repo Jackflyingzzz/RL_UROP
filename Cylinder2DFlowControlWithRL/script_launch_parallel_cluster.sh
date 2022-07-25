@@ -12,7 +12,7 @@ source activate fenicsproject
 # Check that FIRST_PORT and NUM_PORT variables are set
 # TODO
 
-FIRST_PORT=6006
+FIRST_PORT=8626
 NUM_PORT=2
 # check that all ports are free
 output=$(python3 -c "from utils import bash_check_avail; bash_check_avail($FIRST_PORT, $NUM_PORT)")
