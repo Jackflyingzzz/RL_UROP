@@ -37,12 +37,13 @@ for crrt_simu in range(number_servers):
         timing_print=(crrt_simu == 0)     # Only print time info for env_0
     ))
 
-network = [dict(type='gru', size=512,horizon = 10),
-           dict(type='gru', size=512,horizon = 10)]
+network = [dict(type='dense', size=512),
+           dict(type='rnn', size=512, horizon=25,cell='gru'),
+           dict(type='dense', size=512)]
 
 agent = Agent.create(
     # Agent + Environment
-    agent='ppo',  # Agent specification
+    agent='ddpg',  # Agent specification
     environment=example_environment,  # Environment object
     max_episode_timesteps=nb_actuations,  # Upper bound for number of timesteps (action steps) per episode
     # TODO: nb_actuations could be specified by Environment.max_episode_timesteps() if it makes sense...
@@ -50,19 +51,20 @@ agent = Agent.create(
     network=network,  # Policy NN specification
     # Optimization
     batch_size=number_servers,  # Number of episodes per update batch #20 default
+    memory=80,
     learning_rate=1e-4,  # Optimizer learning rate
-    subsampling_fraction=0.2,  # Fraction of batch timesteps to subsample
-    multi_step=25,
+    #subsampling_fraction=0.2,  # Fraction of batch timesteps to subsample
+    #multi_step=25,
     # Reward estimation
-    likelihood_ratio_clipping=0.075, # The epsilon of the ppo CLI objective
+    #likelihood_ratio_clipping=0.075, # The epsilon of the ppo CLI objective
     predict_terminal_values=True,  # Whether to estimate the value of terminal states
     # TODO: gae_lambda=0.97 doesn't currently exist
     # Critic
-    baseline=network,  # Critic NN specification
-    baseline_optimizer=dict(
-        type='multi_step', num_steps=5,
-        optimizer=dict(type='adam', learning_rate=1e-3)
-    ),
+    #baseline=network,  # Critic NN specification
+    #baseline_optimizer=dict(
+        #type='multi_step', num_steps=5,
+        #optimizer=dict(type='adam', learning_rate=1e-3)
+    #),
     # Regularization
     entropy_regularization=0.01,  # To discourage policy from being too 'certain'
     #Exploration
@@ -72,6 +74,8 @@ agent = Agent.create(
     saver=dict(directory=os.path.join(os.getcwd(), 'saver_data')),  # TensorFlow saver configuration for periodic implicit saving
     summarizer=dict(directory=os.path.join(os.getcwd(), 'saver_data','summary'), summaries='all')
 )
+
+
 
 runner = Runner(
     agent=agent,
