@@ -33,7 +33,7 @@ def resume_env(plot=False,  # To plot results (Field, controls, lift, drag, rec 
     # the configuration version number 1
 
     simulation_duration = 50.0 #duree en secondes de la simulation #50.0 default
-    dt = 0.004
+    dt = 0.04
     single_input = False
     single_output = False
     include_actions = False
