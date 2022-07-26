@@ -51,7 +51,7 @@ agent = Agent.create(
     network=network,  # Policy NN specification
     # Optimization
     batch_size=number_servers,  # Number of episodes per update batch #20 default
-    memory=80,
+    memory=250,
     learning_rate=1e-4,  # Optimizer learning rate
     #subsampling_fraction=0.2,  # Fraction of batch timesteps to subsample
     #multi_step=25,
