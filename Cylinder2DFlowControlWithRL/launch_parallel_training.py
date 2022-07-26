@@ -60,13 +60,13 @@ agent = Agent.create(
     predict_terminal_values=True,  # Whether to estimate the value of terminal states
     # TODO: gae_lambda=0.97 doesn't currently exist
     # Critic
-    #baseline=network,  # Critic NN specification
-    #baseline_optimizer=dict(
+    critic=network,  # Critic NN specification
+    critic_optimizer=dict(
         #type='multi_step', num_steps=5,
         #optimizer=dict(type='adam', learning_rate=1e-3)
     #),
     # Regularization
-    entropy_regularization=0.01,  # To discourage policy from being too 'certain'
+    entropy_regularization=0.015,  # To discourage policy from being too 'certain'
     #Exploration
     #exploration=0.01,
     # TensorFlow etc
