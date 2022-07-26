@@ -62,9 +62,9 @@ agent = Agent.create(
     # Critic
     critic=network,  # Critic NN specification
     critic_optimizer=dict(
-        #type='multi_step', num_steps=5,
-        #optimizer=dict(type='adam', learning_rate=1e-3)
-    #),
+        type='multi_step', num_steps=5,
+        optimizer=dict(type='adam', learning_rate=1e-3)
+    ),
     # Regularization
     entropy_regularization=0.015,  # To discourage policy from being too 'certain'
     #Exploration
